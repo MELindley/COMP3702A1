@@ -112,68 +112,68 @@ public class Agent {
 		return buildPath(path,start);
 	}
 	
-	private ArrayList<Vertex> useA (int initId, int goalId){
-		//Retrieve Start vertex
-		Vertex start = locMap.getVertexById(initId);
-		//Set Path Cost for start to 0
-		start.setPathCost(0);
-		//Retrieve goal vertex
-		Vertex goal = locMap.getVertexById(goalId);
-		start.setH(calculateHeur(start, goal));
-		start.setF(start.getH());
-		//A map of vertex to vertex, eventually will contain the most efficient previous step.
-		HashMap<Vertex,Vertex> path = new HashMap<Vertex,Vertex>();
-		//Ensure tha the start end goal vertices are valid
-		if(start == null || goal == null){
-			return buildPath(path,start);
-		}
-		//PQ holding veritces to explore
-		PriorityQueue<Vertex>toExplore = new PriorityQueue<Vertex>(locMap.getNumberOfLocation(),
-				 new FComparator());
-		//HashSet Holding vertices explored
-		HashSet<Vertex>explored = new HashSet<Vertex>();
-		//Add the starting node to the toExplore Queue
-		toExplore.offer(start);
-		//Loop
-		while(!toExplore.isEmpty()){
-			//remove first element from the PQ
-			Vertex v = toExplore.remove();
-			//add it to the explored set
-			explored.add(v);
-			//check that the current vertex isn't the goal vertex
-			if( v.equals(goal)){
-				//if it is return the path from v to the start
-				return buildPath(path,v);
-			}else{
-				//Loop through the Vertices connected to the current vertex
-				for(Edge e: v.getRoads()){
-					//Retrieve the other vertex of the edge
-					Vertex child= e.getOther(v);
-					//if the child vertex is not in explored
-					/*
-					 * =========UPDATED=====
-					 * SAme as per Uniform skip the PQ.contains child check
-					 * =====================
-					 */
-					if(!explored.contains(child)){
-						if(child.getPathCost()<e.getWeight()+v.getPathCost()){
-								continue;
-						}else{
-							//We have found a better path to child, updated/add it ot the PQ 
-							child.setPathCost(e.getWeight()+v.getPathCost());
-							child.setH(calculateHeur(child,goal));
-							child.setF(child.getH()+child.getPathCost());
-							toExplore.remove(child);
-							toExplore.offer(child);
-							path.put(child, v);
-						}
-						
-					}
-				}
-			}	
-		}
-		return buildPath(path,start);
-	}
+//	private ArrayList<Vertex> useA (int initId, int goalId){
+//		//Retrieve Start vertex
+//		Vertex start = locMap.getVertexById(initId);
+//		//Set Path Cost for start to 0
+//		start.setPathCost(0);
+//		//Retrieve goal vertex
+//		Vertex goal = locMap.getVertexById(goalId);
+//		start.setH(calculateHeur(start, goal));
+//		start.setF(start.getH());
+//		//A map of vertex to vertex, eventually will contain the most efficient previous step.
+//		HashMap<Vertex,Vertex> path = new HashMap<Vertex,Vertex>();
+//		//Ensure tha the start end goal vertices are valid
+//		if(start == null || goal == null){
+//			return buildPath(path,start);
+//		}
+//		//PQ holding veritces to explore
+//		PriorityQueue<Vertex>toExplore = new PriorityQueue<Vertex>(locMap.getNumberOfLocation(),
+//				 new FComparator());
+//		//HashSet Holding vertices explored
+//		HashSet<Vertex>explored = new HashSet<Vertex>();
+//		//Add the starting node to the toExplore Queue
+//		toExplore.offer(start);
+//		//Loop
+//		while(!toExplore.isEmpty()){
+//			//remove first element from the PQ
+//			Vertex v = toExplore.remove();
+//			//add it to the explored set
+//			explored.add(v);
+//			//check that the current vertex isn't the goal vertex
+//			if( v.equals(goal)){
+//				//if it is return the path from v to the start
+//				return buildPath(path,v);
+//			}else{
+//				//Loop through the Vertices connected to the current vertex
+//				for(Edge e: v.getRoads()){
+//					//Retrieve the other vertex of the edge
+//					Vertex child= e.getOther(v);
+//					//if the child vertex is not in explored
+//					/*
+//					 * =========UPDATED=====
+//					 * SAme as per Uniform skip the PQ.contains child check
+//					 * =====================
+//					 */
+//					if(!explored.contains(child)){
+//						if(child.getPathCost()<e.getWeight()+v.getPathCost()){
+//								continue;
+//						}else{
+//							//We have found a better path to child, updated/add it ot the PQ 
+//							child.setPathCost(e.getWeight()+v.getPathCost());
+//							child.setH(calculateHeur(child,goal));
+//							child.setF(child.getH()+child.getPathCost());
+//							toExplore.remove(child);
+//							toExplore.offer(child);
+//							path.put(child, v);
+//						}
+//						
+//					}
+//				}
+//			}	
+//		}
+//		return buildPath(path,start);
+//	}
 	/**
 	 * Calculates the heuristic for Vertex v
 	 * 
@@ -305,7 +305,7 @@ public class Agent {
 //					agent.getResults().add(agent.useA(q.getInitID(), q.getGoalID()));
 //				break;
 //				case UNIFORM:
-					agent.getResults().add(agent.useUniform(q.getInitID(), q.getGoalID()));
+				agent.getResults().add(agent.useUniform(q.getInitID(), q.getGoalID()));
 //				break;
 				
 			//}

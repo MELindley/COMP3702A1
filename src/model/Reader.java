@@ -66,6 +66,7 @@ public class Reader {
 			locations.add(secondVertex);
 			//Add the edge to the set of edges
 			edges.add(road);
+			line = reader.readLine();
 		}
 		reader.close();
 		return result;
@@ -79,32 +80,18 @@ public class Reader {
 		ArrayList<Query>result = new ArrayList<Query>();
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
 		try{
-			
 			String line =  reader.readLine();
-			for(int i =0 ;i<numberOfQuery;i++){
-				line = reader.readLine();
-				String[] toProcess = line.split(" ");
-				Query.Type t;
-				if(toProcess[0].equals("Uniform")){
-					t = Query.Type.UNIFORM;
-				}else if(toProcess[0].equals("A*")){
-					t = Query.Type.A;
-				}else{
-					reader.close();
-					throw new Exception(" The algorithm type must be defined as \" Uniform\" "
-							+ "Or \" A*\"");
-				}
-				 
-				Query q = new Query(t,Integer.parseInt(toProcess[1]),Integer.parseInt(toProcess[2]));
+			while(line != null){
+				String[] lineArray = line.split(" ");
+				Query q = new Query(lineArray[0],lineArray[1]);
 				result.add(q);
+				line = reader.readLine();
 			}
 			
 		}catch(Exception e){
 			reader.close();
 			throw new IOException("Error reading queries: "+e.getMessage());
 		}
-		
-		
 		reader.close();
 		return result;
 	}
