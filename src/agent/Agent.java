@@ -53,7 +53,8 @@ public class Agent {
 	 * @param goalId Id of the goal vertex for this path
 	 * @return ArrayList of vertices describing the optimal path found by the algorithm
 	 */
-	private ArrayList<Vertex> useUniform(int initId, int goalId){
+	private ArrayList<Vertex> useUniform(String initId, String goalId){
+		//Start by creating two new vertices for the graph
 		//Retrieve Start vertex
 		Vertex start = locMap.getVertexById(initId);
 		//Set Path Cost for start to 0
@@ -67,7 +68,7 @@ public class Agent {
 			return buildPath(path,start);
 		}
 		//PQ holding veritces to explore
-		PriorityQueue<Vertex>toExplore = new PriorityQueue<Vertex>(locMap.getNumberOfLocation(),
+		PriorityQueue<Vertex>toExplore = new PriorityQueue<Vertex>(locMap.getNumberOfJunctions(),
 				 new PathCostComparator());
 		//HashSet Holding vertices explored
 		HashSet<Vertex>explored = new HashSet<Vertex>();
@@ -287,9 +288,10 @@ public class Agent {
 	
 	public void reInitMap(){
 		Graph graph = this.getLocMap();
+		//Remove the location 
+		graph.removeJunction(graph.getVertexById(-1));
+		graph.removeJunction(graph.getVertexById(-2));
 		for(Vertex v: graph.getJunctions()){
-			v.setF(Integer.MAX_VALUE);
-			v.setH(0);
 			v.setPathCost(Integer.MAX_VALUE);
 		}
 	}
@@ -299,17 +301,11 @@ public class Agent {
 		String queryFile = args[1];
 		String outputFile = args[2];
 		Agent agent = new Agent(environmentFile,queryFile,outputFile);
+		
 		for(Query q: agent.getToExecute()){
-//			switch (q.getType()) {
-//				case A:
-//					agent.getResults().add(agent.useA(q.getInitID(), q.getGoalID()));
-//				break;
-//				case UNIFORM:
-				agent.getResults().add(agent.useUniform(q.getInitID(), q.getGoalID()));
-//				break;
-				
-			//}
-			//Reinitialise the graph
+			
+			agent.getResults().add(agent.useUniform(q.getInitID(), q.getGoalID()));
+		
 			agent.reInitMap();
 		}
 		try{

@@ -9,7 +9,7 @@ import java.util.HashSet;
  * @author Marco Lindley
  *
  */
-public class Graph implements Cloneable {
+public class Graph {
 	HashSet<Vertex>junctions;
 	HashSet<Edge> roads;
 	
@@ -28,6 +28,17 @@ public class Graph implements Cloneable {
 	public void addJunction(Vertex loc){
 		if(!junctions.contains(loc))
 			junctions.add(loc);
+	}
+	
+	public void removeJunction(Vertex loc){
+		//remove the location from the graph
+		junctions.remove(loc);
+		//remove the edges connected to that location.
+		for(Edge e: roads){
+			if(e.contains(loc)){
+				roads.remove(e);
+			}
+		}
 	}
 	
 	public void addRoad(Edge e){
