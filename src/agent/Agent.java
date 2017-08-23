@@ -245,7 +245,7 @@ public class Agent {
 			// calculate the distance;
 			Edge startRoad = graph.getRoadByName(startRoadName.get(i));
 			
-			
+			// !!!!!!!!!!!!!! Here need to add the half distance from the BLOCK to the JUNCTION !!!!!!!!!11
 			// Calculate distance from start to startRoad.StartOfRoad and from start to startRoad.EndOfRoad
 			float startToStartOfRoadDistance = (float) startHouseNumber
 					* (2 * (float)startRoad.getWeight() / startRoad.getNumberOfPlots());
