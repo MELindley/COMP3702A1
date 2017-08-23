@@ -45,6 +45,10 @@ public class Vertex {
 		this.roads.add(road);
 	}
 	
+	public void removeRoad(Edge road){
+		this.roads.remove(road);
+	}
+	
 	public List<Edge> getRoads(){
 		return this.roads;	
 	}
@@ -57,21 +61,6 @@ public class Vertex {
 		return this.pathCost;
 	}
 	
-//	public float getF() {
-//		return f;
-//	}
-//	
-//	public void setF(float f) {
-//		this.f = f;
-//	}
-//	
-//	public float getH() {
-//		return h;
-//	}
-//	
-//	public void setH(float h) {
-//		this.h = h;
-//	}
 	
 	public boolean isConnectedTo(Vertex v1){
 		for(Edge e: roads){
@@ -103,6 +92,6 @@ public class Vertex {
 	}
 
 	public String toString() {
-		return ""+getId();
+		return "J"+getId()+ " With roads: "+roads;
 	}
 }

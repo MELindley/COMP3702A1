@@ -10,7 +10,7 @@ import model.Vertex;
 public class Edge {
 	Vertex startOfRoad;
 	Vertex endOfRoad;
-	int weight;
+	float weight;
 	String name; 
 	int numberOfPlots;
 	
@@ -21,7 +21,7 @@ public class Edge {
 		weight = 0;
 	}
 
-	public Edge(Vertex v1, Vertex v2,String name, int roadLength, int numberOfPlots) {
+	public Edge(Vertex v1, Vertex v2,String name, float roadLength, int numberOfPlots) {
 		this.startOfRoad = v1;
 		this.endOfRoad = v2;
 		this.weight = roadLength;
@@ -51,11 +51,11 @@ public class Edge {
 		return this.endOfRoad;
 	}
 	
-	public int getWeight() {
+	public float getWeight() {
 		return weight;
 	}
 	
-	public void setWeight(int weight){
+	public void setWeight(float weight){
 		this.weight = weight;
 	}
 	
@@ -96,7 +96,7 @@ public class Edge {
 	
 	@Override
 	public String toString(){
-		return startOfRoad.getId()+"-"+endOfRoad.getId();
+		return name;
 	}
 
 	

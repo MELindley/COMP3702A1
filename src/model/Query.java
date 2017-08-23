@@ -26,6 +26,6 @@ public class Query {
 
 	@Override
 	public String toString(){
-		return "Fing optimal path from: "+initID+" to: "+goalID;
+		return "Finding optimal path from: "+initID+" to: "+goalID;
 	}
 }

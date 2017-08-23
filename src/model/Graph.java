@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /***
  * Model Class for the environment graph
@@ -34,9 +35,11 @@ public class Graph {
 		//remove the location from the graph
 		junctions.remove(loc);
 		//remove the edges connected to that location.
-		for(Edge e: roads){
+		for(Iterator<Edge> iterator = roads.iterator(); iterator.hasNext();){
+			Edge e= iterator.next();
 			if(e.contains(loc)){
-				roads.remove(e);
+				iterator.remove();
+				e.getOther(loc).removeRoad(e);
 			}
 		}
 	}
@@ -72,6 +75,15 @@ public class Graph {
 		for(Vertex v: junctions){
 			if(v.getId()==id){
 				return v;
+			}
+		}
+		return null;
+	}
+	
+	public Edge getRoadByName( String name){
+		for(Edge e: roads){
+			if(e.getName().equals(name)){
+				return e;	
 			}
 		}
 		return null;
