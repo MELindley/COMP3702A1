@@ -110,24 +110,28 @@ public class Reader {
 				//For each query answer
 				String toprint ="";
 				List<Vertex>r = results.get(i);
-				float distance = r.get(r.size()-1).getPathCost();
-				toprint += distance+ " ; ";
-				//Start by adding the first road name;
-				toprint+= startRoad.get(i);
-				//iterate over r[1,r.size()-2] first and last vertex are not true vertices (have been manually added)
-				for(int j = 1; j<r.size()-1; j++){
-					Vertex v = r.get(j);
-					List<Edge>roads = v.getRoads();
-					String toTake= null;
-					for(Edge road: roads){
-						if(road.contains(r.get(j+1))){
-							toTake = road.getName();
+				if(r.size()==0){
+					toprint = "no path";
+				}else{
+					float distance = r.get(r.size()-1).getPathCost();
+					toprint += distance+ " ; ";
+					//Start by adding the first road name;
+					toprint+= startRoad.get(i);
+					//iterate over r[1,r.size()-2] first and last vertex are not true vertices (have been manually added)
+					for(int j = 1; j<r.size()-1; j++){
+						Vertex v = r.get(j);
+						List<Edge>roads = v.getRoads();
+						String toTake= null;
+						for(Edge road: roads){
+							if(road.contains(r.get(j+1))){
+								toTake = road.getName();
+							}
 						}
+						toprint += " - "+"J"+v.getId()+" - "+toTake;
 					}
-					toprint += " - "+"J"+v.getId()+" - "+toTake;
+					
+					toprint = toprint.replace("null", goalRoad.get(i));
 				}
-				
-				toprint = toprint.replace("null", goalRoad.get(i));
 				
 				writer.println(toprint);
 			}

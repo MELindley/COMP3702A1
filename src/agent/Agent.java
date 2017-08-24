@@ -112,7 +112,9 @@ public class Agent {
 				}
 			}
 		}
-		return buildPath(path, start);
+		//if this is reached there is no solution 
+		System.out.println("No Solution Found!");
+		return new ArrayList<Vertex>();
 	}
 
 	
