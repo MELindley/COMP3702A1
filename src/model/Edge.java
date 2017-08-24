@@ -96,7 +96,7 @@ public class Edge {
 	
 	@Override
 	public String toString(){
-		return name;
+		return name+ " from J"+ startOfRoad.getId()+ " to J"+ endOfRoad.getId()+ " Distance: "+weight+"\n";
 	}
 
 	

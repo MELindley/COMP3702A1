@@ -38,8 +38,8 @@ public class Graph {
 		for(Iterator<Edge> iterator = roads.iterator(); iterator.hasNext();){
 			Edge e= iterator.next();
 			if(e.contains(loc)){
-				iterator.remove();
 				e.getOther(loc).removeRoad(e);
+				iterator.remove();
 			}
 		}
 	}
@@ -91,7 +91,7 @@ public class Graph {
 	
 	@Override
 	public String toString() {
-		return "Graph [Junctions=" + junctions + ", Roads=" + roads
+		return "Graph [Junctions=" + junctions + "\n Roads=" + roads
 				+ "]";
 	}
 	

@@ -120,16 +120,16 @@ public class Reader {
 				for(int j = 1; j<r.size()-1; j++){
 					Vertex v = r.get(j);
 					List<Edge>roads = v.getRoads();
-					Edge toTake= null;
+					String toTake= null;
 					for(Edge road: roads){
 						if(road.contains(r.get(j+1))){
-							toTake = road;
+							toTake = road.getName();
 						}
 					}
 					toprint += " - "+"J"+v.getId()+" - "+toTake;
 				}
 				
-				toprint = toprint.replace("goalToEndEdge", goalRoad.get(i)).replaceAll("goalToStartEdge", goalRoad.get(i));
+				toprint = toprint.replace("null", goalRoad.get(i));
 				
 				writer.println(toprint);
 			}

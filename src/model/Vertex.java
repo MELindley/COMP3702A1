@@ -92,6 +92,6 @@ public class Vertex {
 	}
 
 	public String toString() {
-		return "J"+getId()+ " With roads: "+roads;
+		return "J"+getId()+ " pathCost: "+getPathCost();
 	}
 }

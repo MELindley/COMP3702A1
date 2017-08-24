@@ -59,8 +59,7 @@ public class Agent {
 	 *         algorithm
 	 */
 	private ArrayList<Vertex> useUniform(int initId, int goalId) {
-		// Start by creating two new vertices for the graph
-		// Retrieve Start vertex
+		//Retrieve
 		Vertex start = locMap.getVertexById(initId);
 		
 		// Set Path Cost for start to 0
@@ -76,16 +75,22 @@ public class Agent {
 			System.out.println("Invalid start or end vertices !");
 			return buildPath(path, start);
 		}
-		// PQ holding veritces to explore
+		// PQ holding vertices to explore
 		PriorityQueue<Vertex> toExplore = new PriorityQueue<Vertex>(locMap.getNumberOfJunctions(),
 				new PathCostComparator());
 		// HashSet Holding vertices explored
 		HashSet<Vertex> explored = new HashSet<Vertex>();
-		// Add the starting node to the toExplore Queue
+		// Add the root node to the toExplore Queue
 		toExplore.offer(start);
 		// Loop
 		while (!toExplore.isEmpty()) {
 			// remove first element from the PQ
+			System.out.println("To Explore: ");
+			for(Vertex v: toExplore){
+				System.out.println(v);
+				System.out.println("Roads to: ");
+				System.out.println(v.getRoads());
+			}
 			Vertex v = toExplore.remove();
 			// add it to the explored set
 			explored.add(v);
@@ -248,10 +253,13 @@ public class Agent {
 			// !!!!!!!!!!!!!! Here need to add the half distance from the BLOCK to the JUNCTION !!!!!!!!!11
 			// Calculate distance from start to startRoad.StartOfRoad and from start to startRoad.EndOfRoad
 			float startToStartOfRoadDistance = (float) startHouseNumber
-					* (2 * (float)startRoad.getWeight() / startRoad.getNumberOfPlots());
+					* (float)startRoad.getWeight() / startRoad.getNumberOfPlots();
+			
+			
 			float startToEndOfRoadDistance = (float)(startRoad.getNumberOfPlots()-startHouseNumber)
-					* (2 * (float)startRoad.getWeight() / startRoad.getNumberOfPlots());
-
+					* (float)startRoad.getWeight() / startRoad.getNumberOfPlots();
+			
+			System.out.println("Distance from plot to start of road: "+startToStartOfRoadDistance+ " Distance from plot to end of Road "+ startToEndOfRoadDistance);
 			// create first edge from startRoad.StartOfRoad to start Vertex ie
 			// the vertes from start to StartRoad.StartOfRoad with distance
 			// calculated above and number of house = goalHouseNumber
@@ -267,14 +275,20 @@ public class Agent {
 			//add the first and second edge to the other vertex
 			startRoad.getStartOfRoad().addRoad(startFirstEdge);
 			startRoad.getEndOfRoad().addRoad(startSecondEdge);
+			//add edges to graph
+			graph.addRoad(startFirstEdge);
+			graph.addRoad(startSecondEdge);
 			
 			
 			//repeat process for goalRoad
 			Edge goalRoad = graph.getRoadByName(goalRoadName.get(i));
 			float goalToStartOfRoadDistance =goalHouseNumber
-					* (2 * (float)goalRoad.getWeight() / goalRoad.getNumberOfPlots());
+					 * (float)goalRoad.getWeight() / goalRoad.getNumberOfPlots();
+			
+			
 			float goalToEndOfRoadDistance = (goalRoad.getNumberOfPlots()-goalHouseNumber)
-					* (2 * (float)goalRoad.getWeight() / goalRoad.getNumberOfPlots());
+					 * (float)goalRoad.getWeight() / goalRoad.getNumberOfPlots();
+			
 			
 			Edge goalFirstEdge = new Edge(goal, goalRoad.getStartOfRoad(), "goalToStartEdge", goalToStartOfRoadDistance,
 					goalHouseNumber);
@@ -283,12 +297,13 @@ public class Agent {
 			goal.addRoad(goalSecondEdge);
 			goalRoad.getStartOfRoad().addRoad(goalFirstEdge);
 			goalRoad.getEndOfRoad().addRoad(goalSecondEdge);
+			graph.addRoad(goalFirstEdge);
+			graph.addRoad(goalSecondEdge);
 			
 			//add junctions to graph
 			graph.addJunction(start);
 			graph.addJunction(goal);
-			
-			
+			//add edges to graph
 			agent.getResults().add(agent.useUniform(-1, -2));
 			//remove the start and end junctions from the graph
 			agent.reInitMap();
