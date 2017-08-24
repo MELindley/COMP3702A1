@@ -15,20 +15,13 @@ public class Reader {
 
 	/**
 	 * <p>
-	 * Reads a text file called fileName that the environment map
-	 * </p>
-	 * 
-	 * <p>
-	 * The first line of the file contains a single positive integer, denoting
-	 * the number n of rows in the matrix. The rest of the file contains the matrix
-	 * of n rows, the element [i,j] of the matrix defines the weight of the edge between
-	 * I&J
+	 * Reads a text file and extracts the environment map
 	 * </p>
 	 * 
 	 * 
 	 * @param fileName
 	 *            the file to read from.
-	 * @return the Graph defined by the matrix read from the file.
+	 * @return the location graph defined by the file.
 	 * @throws IOException
 	 *             if there is an error reading from the input file.
 	 */
@@ -75,7 +68,12 @@ public class Reader {
 			throw e1;
 		}
 	}
-	
+	/***
+	 * Reads a text file and extract the queries
+	 * @param fileName text file containing the queries to be solved
+	 * @return a List of Query objects
+	 * @throws IOException
+	 */
 	public static List<Query> readQueries(String fileName)throws IOException{
 		ArrayList<Query>result = new ArrayList<Query>();
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -102,8 +100,8 @@ public class Reader {
 		 * The second component is the path itself, written as a sequence of road and junctions	travelled
 		 * separated by	a dash (“-“) sign. 
 		 * This	sequence starts	with the initial road and ends	
-			with the goal road.	
-			If there is	no	path that solves the query,	the	written	solution should	be no-path.
+		 *	with the goal road.	
+		 *	If there is	no	path that solves the query,	the	written	solution should	be no-path.
 		 */
 		System.out.println("Writing result to file");
 		try{
@@ -139,34 +137,5 @@ public class Reader {
 			throw new Exception(e);
 		}
 	}
-	
-	/**
-	 * @require The parameter must be non empty line containing only a number
-	 * 
-	 * @ensure returns a positive number
-	 *
-	 * @param str
-	 *            the line from the file containing the number of rows
-	 * @return The number of rows in the matrix
-	 * @throws Exception
-	 *             if the session is not a strictly positive number
-	 */
-	private static int rowNumber(String str) throws Exception {
-		try {
-			int sessionNumber = Integer.parseInt(str.trim());
-			if (sessionNumber > 0)
-				return sessionNumber;
-			else
-				throw new Exception(
-						"ERROR AT LINE 1: The row number must be a positive integer");
-		} catch (Exception e1) {
-			throw new Exception(
-					"ERROR AT LINE 1: The first line must be a positive"
-							+ " integer defining the number of Row");
-		}
-
-	}
-
-	
 }
 
